@@ -1,4 +1,4 @@
-const asyncHandler = require("../middlewares/asyncHandler");
+const asyncHandler = require("../middleware/asyncHandler");
 const faqService = require("../services/faqService");
 
 
@@ -37,3 +37,4 @@ exports.deleteFaq = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+

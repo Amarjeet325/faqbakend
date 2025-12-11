@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: grade_api
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/faq-data
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - .:/app
+    networks:
+      - grade_network
+
+  mongo:
+    image: mongo:6
+    container_name: grade_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - grade_network
+
+  redis:
+    image: redis:7
+    container_name: grade_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - grade_network
+
+networks:
+  grade_network:
+
+volumes:
+  mongo_data:
